@@ -65,7 +65,9 @@ class SignInVC: UIViewController {
                 print("Flash:Succesfully authentificated with firebase")
                 
                 if let user = user {
-                    self.completeSignIn(user.uid)
+                    
+                    let userData = ["provider": credential.provider]
+                    self.completeSignIn(user.uid, userData : userData)
                 }
             }
             
@@ -83,7 +85,8 @@ class SignInVC: UIViewController {
                 if error == nil {
                     print("Flash:User authentificated with firebase")
                     if let user = user {
-                        self.completeSignIn(user.uid)
+                        let userData = ["provider" : user.providerID]
+                        self.completeSignIn(user.uid, userData : userData)
                     }
                     
                 } else {
@@ -94,7 +97,8 @@ class SignInVC: UIViewController {
                         }else {
                             print("Flash:Succesfully authentificated with Firebase")
                             if let user = user {
-                                self.completeSignIn(user.uid)
+                                let userData = ["provider" : user.providerID]
+                                self.completeSignIn(user.uid, userData : userData)
                                 
                             }
                         }
@@ -106,8 +110,9 @@ class SignInVC: UIViewController {
         
     }
     
-    func completeSignIn(_ id : String){
+    func completeSignIn(_ id : String, userData : Dictionary<String , String>){
         
+        DataService.ds.createFirebaseDBUser(uid: id, userData: userData)
         KeychainWrapper.standard.set(id, forKey: KEY_UID)
         print("user id \(id)")
         performSegue(withIdentifier: "goToFeed", sender: nil)
