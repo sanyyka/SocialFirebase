@@ -19,6 +19,7 @@ class FeedVC: UIViewController {
     
     var imagePicker : UIImagePickerController!
     var posts = [Post]()
+    static var imageCache : NSCache<NSString, UIImage> = NSCache()
     
     override func viewDidLoad() {
         super.viewDidLoad()
