@@ -10,9 +10,15 @@ import UIKit
 import Firebase
 import SwiftKeychainWrapper
 
+
+
 class FeedVC: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var postImageAdd: RoundImage!
+    
+    var imagePicker : UIImagePickerController!
+    var posts = [Post]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,9 +26,26 @@ class FeedVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
+        imagePicker = UIImagePickerController()
+        imagePicker.allowsEditing = true
+        imagePicker.delegate = self
+        
+        
         DataService.ds.REF_POSTS.observe(.value, with: { (snapshot) in
             
-           print(snapshot.value)
+            if let snapshot = snapshot.children.allObjects as? [FIRDataSnapshot] {
+                for snap in snapshot {
+                    print("Snap : \(snap)")
+                    
+                    if let postDict = snap.value as? Dictionary<String, AnyObject> {
+                        let key = snap.key
+                        let post = Post(postKey: key, postData: postDict)
+                        self.posts.append(post)
+                    }
+                }
+            }
+            self.tableView.reloadData()
+            
         })
         
     }
@@ -37,10 +60,13 @@ class FeedVC: UIViewController {
        
     }
 
+    @IBAction func addImagePressed(_ sender: Any) {
+        present(imagePicker, animated: true, completion: nil)
+    }
 }
 
 
-extension FeedVC : UITableViewDelegate ,UITableViewDataSource {
+extension FeedVC : UITableViewDelegate ,UITableViewDataSource ,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         
@@ -50,7 +76,7 @@ extension FeedVC : UITableViewDelegate ,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return 2
+        return posts.count
     }
    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -59,10 +85,31 @@ extension FeedVC : UITableViewDelegate ,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-       // if let cell = tableView.dequeueReusableCell(withIdentifier: , for: <#T##IndexPath#>)
+        let post = posts[indexPath.row]
         
-        return tableView.dequeueReusableCell(withIdentifier: "postCell") as! PostCell
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell") as? PostCell {
+            
+            cell.configureCell(post: post)
+            return cell
+        }else {
+            return UITableViewCell()
+        }
+       
     }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
+            
+            postImageAdd.image = image
+        }else {
+            
+            print("A valid image was not selected")
+        }
+        imagePicker.dismiss(animated: true, completion: nil)
+        
+    }
+    
     
 }
 

@@ -21,6 +21,7 @@
 		E55CDC321E1E70C5004F6F3D /* SignInFancy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55CDC311E1E70C5004F6F3D /* SignInFancy.swift */; };
 		E58F921A1E236FEF00DA74AE /* RoundImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58F92191E236FEF00DA74AE /* RoundImage.swift */; };
 		E5AD88891E237CA0001B1213 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AD88881E237CA0001B1213 /* DataService.swift */; };
+		E5AD888B1E239564001B1213 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AD888A1E239564001B1213 /* Post.swift */; };
 		E96BB4E5E9CC4A4B7C5F0E7B /* Pods_SocialFirebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 744DC8A2358E9340B31A7ECD /* Pods_SocialFirebase.framework */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +45,7 @@
 		E55CDC311E1E70C5004F6F3D /* SignInFancy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInFancy.swift; sourceTree = "<group>"; };
 		E58F92191E236FEF00DA74AE /* RoundImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundImage.swift; sourceTree = "<group>"; };
 		E5AD88881E237CA0001B1213 /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
+		E5AD888A1E239564001B1213 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +128,7 @@
 		E55CDC281E1E4F87004F6F3D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E5AD888A1E239564001B1213 /* Post.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -280,6 +283,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E55CDC301E1E694B004F6F3D /* Constants.swift in Sources */,
+				E5AD888B1E239564001B1213 /* Post.swift in Sources */,
 				E55A53851E1FA09700895308 /* FeedVC.swift in Sources */,
 				E55CDC131E1E4A2D004F6F3D /* SignInVC.swift in Sources */,
 				E55CDC2C1E1E6845004F6F3D /* ShadowHunter.swift in Sources */,

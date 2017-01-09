@@ -201,13 +201,17 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="rcq-I4-c2y">
                                         <rect key="frame" x="8" y="8" width="311" height="54"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="add-image" translatesAutoresizingMaskIntoConstraints="NO" id="xDs-Da-Mkx" customClass="RoundImage" customModule="SocialFirebase" customModuleProvider="target">
+                                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="add-image" translatesAutoresizingMaskIntoConstraints="NO" id="xDs-Da-Mkx" customClass="RoundImage" customModule="SocialFirebase" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="2.5" width="49" height="49"/>
                                                 <color key="backgroundColor" red="0.69642132130000001" green="0.067793899800000001" blue="0.87644749369999997" alpha="0.53652076199999998" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <gestureRecognizers/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="49" id="71K-lV-qlg"/>
                                                     <constraint firstAttribute="height" constant="49" id="dYy-7e-ZKt"/>
                                                 </constraints>
+                                                <connections>
+                                                    <outletCollection property="gestureRecognizers" destination="vDs-LH-6nY" appends="YES" id="c1b-hb-xYs"/>
+                                                </connections>
                                             </imageView>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add a caption" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RuQ-9o-hgW">
                                                 <rect key="frame" x="61" y="12" width="192" height="30"/>
@@ -247,7 +251,7 @@
                                 <rect key="frame" x="0.0" y="165" width="375" height="502"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="postCell" rowHeight="315" id="quY-l9-V6i" customClass="PostCell" customModule="SocialFirebase" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PostCell" rowHeight="315" id="quY-l9-V6i" customClass="PostCell" customModule="SocialFirebase" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="315"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="quY-l9-V6i" id="NH3-pv-T2H">
@@ -363,11 +367,17 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="postImageAdd" destination="xDs-Da-Mkx" id="KdW-1M-41q"/>
                         <outlet property="tableView" destination="ahv-up-0eW" id="OMt-IQ-4cV"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="goToSingIn" id="MLV-EW-2N4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HXQ-Fv-Oed" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="vDs-LH-6nY">
+                    <connections>
+                        <action selector="addImagePressed:" destination="Lad-I8-FuB" id="Hnj-wr-3Ue"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="960.79999999999995" y="35.532233883058474"/>
         </scene>
