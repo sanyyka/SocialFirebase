@@ -63,5 +63,10 @@
 	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We need permision to photos in order to post it ! </string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 </dict>
 </plist>

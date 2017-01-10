@@ -24,7 +24,7 @@ class PostCell: UITableViewCell {
         
     }
 
-    func configureCell(post : Post, img : UIImage?) {
+    func configureCell(post : Post, img : UIImage? = nil) {
         
         self.post = post
         
@@ -41,8 +41,15 @@ class PostCell: UITableViewCell {
                     print("Unable to download data from Firebase storage")
                 }else {
                     print("Image downloaded from Firebase storage")
+                    if let imageData = data {
+                        if let img = UIImage(data: imageData) {
+                            self.postImg.image = img
+                            FeedVC.imageCache.setObject(img, forKey: post.imageUrl as NSString)
+                        }
+                    }
                     
                 }
+                
                 
               })
         }
