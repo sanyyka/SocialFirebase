@@ -16,10 +16,12 @@ class FeedVC: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var postImageAdd: RoundImage!
+    @IBOutlet weak var captionField: UITextField!
     
     var imagePicker : UIImagePickerController!
     var posts = [Post]()
     static var imageCache : NSCache<NSString, UIImage> = NSCache()
+    var imageSelected = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,6 +62,40 @@ class FeedVC: UIViewController {
         performSegue(withIdentifier: "goToSingIn", sender: nil)
        
     }
+    
+    @IBAction func postBtnPressed(_ sender: Any) {
+        
+        guard  let caption = captionField.text , captionField.text != "" else {
+            print("You have to add a caption to the post")
+            return
+        }
+        
+        guard let img = postImageAdd.image, imageSelected == true else {
+            print("An image must be selected")
+            return
+        }
+        
+        if let imageData = UIImageJPEGRepresentation(img, 0.2) {
+            
+            let imgUid = NSUUID().uuidString
+            let metadata = FIRStorageMetadata()
+            metadata.contentType = "image/jpeg"
+            
+            DataService.ds.REF_TO_STORAGE_POSTS.child(imgUid).put(imageData, metadata: metadata) { (metadata, error) in
+                
+                if error != nil {
+                    print("Unable to upload image to Firebase storage.")
+                } else {
+                    print("The image was updated to Firebase storage succesfully.")
+                    let downloadUrl = metadata?.downloadURL()?.absoluteString
+                }
+            
+                
+            }
+        }
+        
+    }
+   
 
     @IBAction func addImagePressed(_ sender: Any) {
         present(imagePicker, animated: true, completion: nil)
@@ -110,6 +146,7 @@ extension FeedVC : UITableViewDelegate ,UITableViewDataSource ,UIImagePickerCont
         if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
             
             postImageAdd.image = image
+            imageSelected = true
             
         }else {
             
