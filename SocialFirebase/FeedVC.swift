@@ -34,8 +34,10 @@ class FeedVC: UIViewController {
         imagePicker.delegate = self
         
         
+        
         DataService.ds.REF_POSTS.observe(.value, with: { (snapshot) in
             
+            self.posts = []
             if let snapshot = snapshot.children.allObjects as? [FIRDataSnapshot] {
                 for snap in snapshot {
                     print("Snap : \(snap)")
@@ -88,14 +90,33 @@ class FeedVC: UIViewController {
                 } else {
                     print("The image was updated to Firebase storage succesfully.")
                     let downloadUrl = metadata?.downloadURL()?.absoluteString
+                    
+                    if let url = downloadUrl {
+                        self.postToFirebase(imgUrl: url)
+                    }
                 }
-            
-                
             }
         }
         
     }
-   
+    
+    func postToFirebase(imgUrl : String) {
+        
+        let postDict : Dictionary<String , Any>  = [
+        "caption": captionField.text!,
+        "imageUrl": imgUrl ,
+        "likes":0
+        ]
+        
+        let refToPost = DataService.ds.REF_POSTS.childByAutoId()
+        refToPost.setValue(postDict)
+        
+        captionField.text = ""
+        postImageAdd.image = UIImage(named: "add-image")
+        imageSelected = false
+        
+        
+    }
 
     @IBAction func addImagePressed(_ sender: Any) {
         present(imagePicker, animated: true, completion: nil)
@@ -155,16 +176,5 @@ extension FeedVC : UITableViewDelegate ,UITableViewDataSource ,UIImagePickerCont
         imagePicker.dismiss(animated: true, completion: nil)
         
     }
-    
-    
+
 }
-
-
-
-
-
-
-
-
-
-
